@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: csct-app
+  labels:
+    app: csct-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: csct-app
+  template:
+    metadata:
+      labels:
+        app: csct-app
+      annotations:
+        vault.hashicorp.com/agent-inject: 'true'
+        vault.hashicorp.com/role: 'csct-role'
+        vault.hashicorp.com/agent-inject-secret-credentials: 'secret/data/csct/mysql'
+    spec:
+      serviceAccountName: vault-auth-demo
+      containers:
+        - name: csct-app
+          image: nolet7/csct-app:latest
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - name: secrets
+              mountPath: /vault/secrets
+      volumes:
+        - name: secrets
+          emptyDir:
+            medium: Memory

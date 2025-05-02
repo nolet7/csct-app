@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head><title>CSCT Dashboard</title></head>
+  <body>
+    <h1>CSCT Dashboard</h1>
+    <p>Component Records:</p>
+    <table border="1">
+      <tr><th>ID</th><th>Name</th><th>Status</th></tr>
+      {% for row in components %}
+        <tr>
+          <td>{{ row[0] }}</td>
+          <td>{{ row[1] }}</td>
+          <td>{{ row[2] }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
